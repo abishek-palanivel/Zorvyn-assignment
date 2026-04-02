@@ -16,13 +16,24 @@ export const FinanceProvider = ({ children }) => {
 
   useEffect(() => {
     // Load initial data
-    setTransactions(generateMockTransactions());
+    const savedTxns = localStorage.getItem('finance-dashboard-txns');
+    if (savedTxns) {
+      setTransactions(JSON.parse(savedTxns));
+    } else {
+      setTransactions(generateMockTransactions());
+    }
     
     // Check local storage for theme
     const savedTheme = localStorage.getItem('finance-dashboard-theme') || 'light';
     setTheme(savedTheme);
     document.documentElement.setAttribute('data-theme', savedTheme);
   }, []);
+
+  useEffect(() => {
+    if (transactions.length > 0) {
+      localStorage.setItem('finance-dashboard-txns', JSON.stringify(transactions));
+    }
+  }, [transactions]);
 
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';

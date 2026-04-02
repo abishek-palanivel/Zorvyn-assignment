@@ -23,12 +23,12 @@ const InsightsPanel = () => {
       
       {highestCategory ? (
         <div style={{ padding: '16px', backgroundColor: 'var(--bg-color)', borderRadius: '8px' }}>
-          <p style={{ fontSize: '14px', color: 'var(--text-secondary)', marginBottom: '4px' }}>Highest Spending Area</p>
+          <p style={{ fontSize: '14px', color: 'var(--text-secondary)', marginBottom: '4px' }}>Highest spending category:</p>
           <h4 style={{ fontSize: '18px', fontWeight: '600', color: 'var(--expense-color)' }}>
             {highestCategory[0]}
           </h4>
           <p style={{ fontSize: '16px', fontWeight: 'bold' }}>
-            ${highestCategory[1].toFixed(2)}
+            ₹{highestCategory[1].toFixed(0)}
           </p>
         </div>
       ) : (
@@ -44,7 +44,7 @@ const InsightsPanel = () => {
               <div key={category}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', marginBottom: '4px' }}>
                   <span>{category}</span>
-                  <span style={{ fontWeight: '600' }}>${amount.toFixed(0)}</span>
+                  <span style={{ fontWeight: '600' }}>₹{amount.toFixed(0)}</span>
                 </div>
                 <div style={{ height: '8px', width: '100%', backgroundColor: 'var(--bg-color)', borderRadius: '4px', overflow: 'hidden' }}>
                   <div style={{ 

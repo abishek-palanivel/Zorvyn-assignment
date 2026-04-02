@@ -27,16 +27,14 @@ const TransactionsTable = () => {
     setNewTxn({ date: '', merchant: '', category: '', amount: '', type: 'expense' });
   };
 
-  // Create unique categories for filter dropdown
-  const categories = ['All', ...new Set(transactions.map(t => t.category))];
-
-  // Filtering
+  // Filtering based on All, Income, Expense
   const filteredTransactions = transactions.filter(t => {
     if (categoryFilter === 'All') return true;
-    return t.category === categoryFilter;
+    if (categoryFilter === 'Income') return t.type === 'income';
+    if (categoryFilter === 'Expense') return t.type === 'expense';
+    return true;
   });
 
-  // Sorting
   const sortedTransactions = [...filteredTransactions].sort((a, b) => {
     const dateA = new Date(a.date).getTime();
     const dateB = new Date(b.date).getTime();
@@ -48,20 +46,20 @@ const TransactionsTable = () => {
       
       {/* Controls */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
-        <div style={{ display: 'flex', gap: '12px' }}>
-          <select 
-            value={categoryFilter}
-            onChange={(e) => setCategoryFilter(e.target.value)}
-            style={{
-              padding: '6px 10px',
-              borderRadius: '6px',
-              border: '1px solid var(--border-color)',
-              backgroundColor: 'var(--bg-color)',
-              color: 'var(--text-primary)'
-            }}
-          >
-            {categories.map(c => <option key={c} value={c}>{c}</option>)}
-          </select>
+        <div style={{ display: 'flex', gap: '8px' }}>
+          {['All', 'Income', 'Expense'].map(filter => (
+            <button 
+              key={filter}
+              onClick={() => setCategoryFilter(filter)}
+              className="btn btn-filter"
+              style={{
+                backgroundColor: categoryFilter === filter ? 'var(--accent-color)' : 'var(--bg-color)',
+                color: categoryFilter === filter ? 'white' : 'var(--text-primary)',
+              }}
+            >
+              {filter}
+            </button>
+          ))}
 
           <select 
             value={dateSort}
@@ -82,13 +80,10 @@ const TransactionsTable = () => {
         {role === 'ADMIN' && (
           <button 
             onClick={() => setIsAdding(!isAdding)}
+            className="btn btn-primary"
             style={{
-              padding: '8px 16px',
               backgroundColor: 'var(--accent-color)',
               color: 'white',
-              borderRadius: '6px',
-              fontWeight: '500',
-              fontSize: '14px'
             }}>
             {isAdding ? 'Cancel' : '+ Add Transaction'}
           </button>
@@ -143,18 +138,18 @@ const TransactionsTable = () => {
                     </span>
                   </td>
                   <td style={{ 
-                    padding: '12px 8px', 
+                    padding: '16px 8px', 
                     textAlign: 'right',
                     fontWeight: '600',
-                    color: txn.type === 'income' ? 'var(--income-color)' : 'var(--text-primary)'
+                    color: txn.type === 'income' ? 'var(--income-color)' : 'var(--expense-color)'
                   }}>
-                    {txn.type === 'income' ? '+' : '-'}${txn.amount.toFixed(2)}
+                    {txn.type === 'income' ? '+' : '-'}₹{txn.amount.toFixed(2)}
                   </td>
                   {role === 'ADMIN' && (
-                    <td style={{ padding: '12px 8px', textAlign: 'center' }}>
+                    <td style={{ padding: '16px 8px', textAlign: 'center' }}>
                       <button 
+                        className="btn btn-danger"
                         onClick={() => deleteTransaction(txn.id)}
-                        style={{ color: 'var(--expense-color)', fontSize: '13px', padding: '4px 8px' }}
                       >
                         Delete
                       </button>
