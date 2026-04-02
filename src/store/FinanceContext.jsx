@@ -9,6 +9,7 @@ export const FinanceProvider = ({ children }) => {
   const [transactions, setTransactions] = useState([]);
   const [role, setRole] = useState('VIEWER'); // VIEWER or ADMIN
   const [theme, setTheme] = useState('light');
+  const [activeTab, setActiveTab] = useState('Dashboard');
   
   // Basic filter states
   const [categoryFilter, setCategoryFilter] = useState('All');
@@ -58,6 +59,8 @@ export const FinanceProvider = ({ children }) => {
   };
 
   const value = {
+    activeTab,
+    setActiveTab,
     transactions,
     role,
     setRole,

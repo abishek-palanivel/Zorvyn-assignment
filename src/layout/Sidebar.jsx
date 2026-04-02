@@ -1,6 +1,10 @@
 import React from 'react';
+import { useFinance } from '../store/FinanceContext';
 
 const Sidebar = () => {
+  const { activeTab, setActiveTab } = useFinance();
+  const tabs = ['Dashboard', 'Transactions', 'Analytics', 'Settings'];
+
   return (
     <aside style={{
       width: '250px',
@@ -14,10 +18,25 @@ const Sidebar = () => {
         FinDash
       </div>
       <nav style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-        <a href="#" style={{ color: 'var(--sidebar-active)', fontWeight: '600', padding: '10px 12px', backgroundColor: 'var(--accent-color)', borderRadius: '8px' }}>Dashboard</a>
-        <a href="#" style={{ padding: '10px 12px', borderRadius: '8px' }}>Transactions</a>
-        <a href="#" style={{ padding: '10px 12px', borderRadius: '8px' }}>Analytics</a>
-        <a href="#" style={{ padding: '10px 12px', borderRadius: '8px' }}>Settings</a>
+        {tabs.map(tab => (
+          <button 
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            style={{
+              padding: '10px 12px',
+              borderRadius: '8px',
+              backgroundColor: activeTab === tab ? 'var(--accent-color)' : 'transparent',
+              color: activeTab === tab ? 'white' : 'var(--sidebar-text)',
+              fontWeight: activeTab === tab ? '600' : 'normal',
+              textAlign: 'left',
+              width: '100%',
+              transition: 'background-color 0.2s',
+              cursor: 'pointer'
+            }}
+          >
+            {tab}
+          </button>
+        ))}
       </nav>
       
       <div style={{ marginTop: 'auto', padding: '12px', backgroundColor: 'rgba(255,255,255,0.05)', borderRadius: '8px' }}>
