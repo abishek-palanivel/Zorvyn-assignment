@@ -2,6 +2,10 @@
 
 A visually stunning, zero-dependency custom-styled React finance dashboard designed for the frontend developer assignment evaluation.
 
+## Links
+- **Live Demo:** [https://zorvyn-finance-dashboard.netlify.app/](https://zorvyn-finance-dashboard.netlify.app/)
+- **GitHub Repository:** [https://github.com/abishek-palanivel/Zorvyn-assignment](https://github.com/abishek-palanivel/Zorvyn-assignment)
+
 ## Features
 - **Dashboard Overview:** Displays Real-time calculated balances, income, expenses.
 - **Transactions Management:** View lists, filter by category, sort by timestamp.
